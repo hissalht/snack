@@ -1,4 +1,4 @@
-import { addComponent, addEntity, createWorld, IWorld, pipe } from 'bitecs'
+import { addComponent, addEntity, pipe } from 'bitecs'
 
 import './style.css'
 import { TimeSystem } from './ecs/systems/TimeSystem'
@@ -7,8 +7,9 @@ import { Position } from './ecs/components/Position'
 import { Velocity } from './ecs/components/Velocity'
 import { RenderingSystem } from './ecs/systems/RenderingSystem'
 import { MovementSystem } from './ecs/systems/MovementSystem'
-import { Direction } from './ecs/components/Direction'
-import { DirectionSystem } from './ecs/systems/DirectionSystem'
+import { InputSystem } from './ecs/systems/InputSystem'
+import { Controlled } from './ecs/components/Controlled'
+import { SteeringSystem } from './ecs/systems/SteeringSystem'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -29,7 +30,8 @@ function main() {
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
   const pipeline = pipe(
-    DirectionSystem,
+    InputSystem(document.body),
+    SteeringSystem,
     MovementSystem,
     RenderingSystem(ctx),
     TimeSystem
@@ -39,9 +41,10 @@ function main() {
   const eid = addEntity(world)
   addComponent(world, Position, eid)
   addComponent(world, Velocity, eid)
-  addComponent(world, Direction, eid)
+  addComponent(world, Controlled, eid)
 
-  Direction.angle[eid] = Math.PI / 8
+  Velocity.angle[eid] = Math.PI / 8
+  Velocity.speed[eid] = 50
 
   function loop() {
     pipeline(world)

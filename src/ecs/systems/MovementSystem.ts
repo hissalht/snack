@@ -19,8 +19,11 @@ export const MovementSystem: SnackSystem = world => {
   for (let i = 0; i < ents.length; i++) {
     const eid = ents[i]
 
-    Position.x[eid] += Velocity.x[eid] * delta
-    Position.y[eid] += Velocity.y[eid] * delta
+    const angle = Velocity.angle[eid]
+    const speed = Velocity.speed[eid]
+
+    Position.x[eid] += Math.cos(angle) * speed * delta
+    Position.y[eid] += Math.sin(angle) * speed * delta
   }
 
   return world
