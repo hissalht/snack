@@ -44,7 +44,7 @@ function main() {
   addComponent(world, Controlled, eid)
 
   Velocity.angle[eid] = Math.PI / 8
-  Velocity.speed[eid] = 50
+  Velocity.speed[eid] = 75
 
   Position.x[eid] = 128
   Position.y[eid] = 128
