@@ -1,9 +1,13 @@
 import { defineQuery } from 'bitecs'
 
 import { Position } from '../components/Position'
+import { Velocity } from '../components/Velocity'
 import { SnackSystem } from '../SnackSystem'
 
-const renderingQuery = defineQuery([Position])
+const renderingQuery = defineQuery([Position, Velocity])
+
+const BLOCK_WIDTH = 12.5
+const BLOCK_HEIGHT = 10
 
 /**
  * @param ctx Canvas rendering context
@@ -20,9 +24,19 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
     for (let i = 0; i < ents.length; i++) {
       const eid = ents[i]
 
+      const x = Position.x[eid]
+      const y = Position.y[eid]
+      const w = BLOCK_WIDTH
+      const h = BLOCK_HEIGHT
+      const angle = Velocity.angle[eid]
+
       ctx.beginPath()
       ctx.fillStyle = '#ffffff'
-      ctx.fillRect(Position.x[eid], Position.y[eid], 10, 10)
+      ctx.translate(x + w / 2, y + h / 2)
+      ctx.rotate(angle)
+      ctx.translate(-(x + w / 2), -(y + h / 2))
+      ctx.fillRect(x, y, w, h)
+      ctx.resetTransform()
     }
 
     return world

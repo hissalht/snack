@@ -46,6 +46,9 @@ function main() {
   Velocity.angle[eid] = Math.PI / 8
   Velocity.speed[eid] = 50
 
+  Position.x[eid] = 128
+  Position.y[eid] = 128
+
   function loop() {
     pipeline(world)
 
