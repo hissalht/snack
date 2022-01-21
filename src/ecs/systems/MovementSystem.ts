@@ -25,17 +25,25 @@ export const MovementSystem: SnackSystem = world => {
     const angle = Velocity.angle[eid]
     const speed = Velocity.speed[eid]
 
-    const newX = Position.x[eid] + Math.cos(angle) * speed * delta
-    const newY = Position.y[eid] + Math.sin(angle) * speed * delta
+    let newX = Position.x[eid] + Math.cos(angle) * speed * delta
+    let newY = Position.y[eid] + Math.sin(angle) * speed * delta
 
     // Horizontal bounce
-    if (newX < 0 || newX >= ARENA_WIDTH) {
+    if (newX < 0) {
       Velocity.angle[eid] = Math.PI - angle
+      newX = -newX
+    } else if (newX >= ARENA_WIDTH) {
+      Velocity.angle[eid] = Math.PI - angle
+      newX = ARENA_WIDTH - (newX - ARENA_WIDTH)
     }
 
     // Vertical bounce
-    if (newY < 0 || newY >= ARENA_HEIGHT) {
+    if (newY < 0) {
       Velocity.angle[eid] = -angle
+      newY = -newY
+    } else if (newY >= ARENA_HEIGHT) {
+      Velocity.angle[eid] = -angle
+      newY = ARENA_HEIGHT - (newY - ARENA_HEIGHT)
     }
 
     Position.x[eid] = newX

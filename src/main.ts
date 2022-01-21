@@ -43,8 +43,8 @@ function main() {
   addComponent(world, Velocity, eid)
   addComponent(world, Controlled, eid)
 
-  Velocity.angle[eid] = Math.PI / 8
-  Velocity.speed[eid] = 75
+  Velocity.angle[eid] = Math.PI + Math.PI / 8
+  Velocity.speed[eid] = 100
 
   Position.x[eid] = 128
   Position.y[eid] = 128
