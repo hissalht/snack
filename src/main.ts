@@ -7,6 +7,8 @@ import { Position } from './ecs/components/Position'
 import { Velocity } from './ecs/components/Velocity'
 import { RenderingSystem } from './ecs/systems/RenderingSystem'
 import { MovementSystem } from './ecs/systems/MovementSystem'
+import { Direction } from './ecs/components/Direction'
+import { DirectionSystem } from './ecs/systems/DirectionSystem'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -26,15 +28,20 @@ function main() {
   ctx.fillStyle = '#000000'
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
-  const pipeline = pipe(MovementSystem, RenderingSystem(ctx), TimeSystem)
+  const pipeline = pipe(
+    DirectionSystem,
+    MovementSystem,
+    RenderingSystem(ctx),
+    TimeSystem
+  )
 
   const world = createSnackWorld()
   const eid = addEntity(world)
   addComponent(world, Position, eid)
   addComponent(world, Velocity, eid)
+  addComponent(world, Direction, eid)
 
-  Velocity.x[eid] = 5
-  Velocity.y[eid] = 10
+  Direction.angle[eid] = Math.PI / 8
 
   function loop() {
     pipeline(world)
