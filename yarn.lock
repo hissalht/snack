@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+bitecs@^0.3.34:
+  version "0.3.34"
+  resolved "https://registry.yarnpkg.com/bitecs/-/bitecs-0.3.34.tgz#88eba88be46097588de8890ab9c43006d4c9d8e4"
+  integrity sha512-WFtNl+7rthxnrNcuQbvnGjOvXYRkOlyz0x/BWZ2a1nJC/k8z6zksDX1B+AH1KH9JqT11V8SzlECAmpcCM+Hkow==
+
 esbuild-android-arm64@0.13.15:
   version "0.13.15"
   resolved "https://registry.yarnpkg.com/esbuild-android-arm64/-/esbuild-android-arm64-0.13.15.tgz#3fc3ff0bab76fe35dd237476b5d2b32bb20a3d44"
