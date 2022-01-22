@@ -26,6 +26,7 @@ export const ShootingSystem: SnackSystem = world => {
     if (HighRoller.cooldown[eid] <= 0) {
       HighRoller.cooldown[eid] = SHOT_COOLDOWN
 
+      // spawn new bullet
       const projectile = addEntity(world)
       addComponent(world, Projectile, projectile)
       addComponent(world, Position, projectile)
@@ -40,6 +41,9 @@ export const ShootingSystem: SnackSystem = world => {
       const angle = Math.random() * Math.PI * 2
       Velocity.x[projectile] = Math.cos(angle) * BULLET_SPEED
       Velocity.y[projectile] = Math.sin(angle) * BULLET_SPEED
+
+      // Set max number of bounces
+      Bounce.max[projectile] = 1
     }
   }
 

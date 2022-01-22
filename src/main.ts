@@ -18,6 +18,7 @@ import { ShootingSystem } from './ecs/systems/ShootingSystem'
 import { HighRoller } from './ecs/components/HighRoller'
 import { Bounce } from './ecs/components/Bounce'
 import { BouncingSystem } from './ecs/systems/BouncingSystem'
+import { Projectile } from './ecs/components/Projectile'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -71,7 +72,7 @@ function main() {
     Leader.positionHistory.y[eid][i] = 128
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 1; i++) {
     const followerId = addEntity(world)
     addComponent(world, Unit, followerId)
     addComponent(world, Position, followerId)
@@ -84,6 +85,45 @@ function main() {
 
     HighRoller.cooldown[followerId] = 1.5 // Wait half a sec before shooting the first bullet
   }
+
+  // {
+  //   const bullet = addEntity(world)
+  //   addComponent(world, Projectile, bullet)
+  //   addComponent(world, Position, bullet)
+  //   addComponent(world, Velocity, bullet)
+  //   addComponent(world, Bounce, bullet)
+
+  //   // Set bullet position
+  //   Position.x[bullet] = 128
+  //   Position.y[bullet] = 128
+
+  //   // Set bullet velocity
+  //   const angle = Math.random() * Math.PI * 2
+  //   Velocity.x[bullet] = Math.cos(angle) * 200
+  //   Velocity.y[bullet] = Math.sin(angle) * 200
+
+  //   // Set max number of bounces
+  //   Bounce.max[bullet] = 3
+  // }
+  // {
+  //   const bullet = addEntity(world)
+  //   addComponent(world, Projectile, bullet)
+  //   addComponent(world, Position, bullet)
+  //   addComponent(world, Velocity, bullet)
+  //   addComponent(world, Bounce, bullet)
+
+  //   // Set bullet position
+  //   Position.x[bullet] = 128
+  //   Position.y[bullet] = 128
+
+  //   // Set bullet velocity
+  //   const angle = Math.random() * Math.PI * 2
+  //   Velocity.x[bullet] = Math.cos(angle) * 200
+  //   Velocity.y[bullet] = Math.sin(angle) * 200
+
+  //   // Set max number of bounces
+  //   Bounce.max[bullet] = 3
+  // }
 
   function loop() {
     pipeline(world)

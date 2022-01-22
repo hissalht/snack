@@ -13,6 +13,10 @@ const leaderQuery = defineQuery([Leader, Unit, Position])
 export const SnakeSystem: SnackSystem = world => {
   const leaderId = leaderQuery(world)[0]
 
+  if (!leaderId) {
+    return world
+  }
+
   // Fill the leader's position history
   Leader.positionHistory.x[leaderId][Leader.historyCursor[leaderId]] =
     Position.x[leaderId]
