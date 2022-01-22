@@ -1,4 +1,4 @@
-import { defineQuery, Not } from 'bitecs'
+import { defineQuery } from 'bitecs'
 import { Leader, POSITION_HISTORY_LENGTH } from '../components/Leader'
 import { Position } from '../components/Position'
 import { Unit } from '../components/Unit'

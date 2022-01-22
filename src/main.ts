@@ -62,7 +62,7 @@ function main() {
     Leader.positionHistory.y[eid][i] = 128
   }
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 5; i++) {
     const followerId = addEntity(world)
     addComponent(world, Unit, followerId)
     addComponent(world, Position, followerId)
