@@ -1,4 +1,5 @@
 import { defineQuery } from 'bitecs'
+import { Direction } from '../components/Direction'
 import { Leader, POSITION_HISTORY_LENGTH } from '../components/Leader'
 import { Position } from '../components/Position'
 import { Unit } from '../components/Unit'
@@ -17,6 +18,8 @@ export const SnakeSystem: SnackSystem = world => {
     Position.x[leaderId]
   Leader.positionHistory.y[leaderId][Leader.historyCursor[leaderId]] =
     Position.y[leaderId]
+  Leader.directionHistory[leaderId][Leader.historyCursor[leaderId]] =
+    Direction.angle[leaderId]
   Leader.historyCursor[leaderId] =
     (Leader.historyCursor[leaderId] + 1) % POSITION_HISTORY_LENGTH
 
@@ -33,6 +36,7 @@ export const SnakeSystem: SnackSystem = world => {
 
     Position.x[followerId] = Leader.positionHistory.x[leaderId][index]
     Position.y[followerId] = Leader.positionHistory.y[leaderId][index]
+    Direction.angle[followerId] = Leader.directionHistory[leaderId][index]
   })
 
   return world

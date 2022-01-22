@@ -8,5 +8,6 @@ export const Leader = defineComponent({
     x: [Types.f32, POSITION_HISTORY_LENGTH],
     y: [Types.f32, POSITION_HISTORY_LENGTH],
   },
+  directionHistory: [Types.f32, POSITION_HISTORY_LENGTH],
   followers: [Types.eid, 10],
 })
