@@ -1,16 +1,19 @@
 import { defineQuery } from 'bitecs'
+import { Direction } from '../components/Direction'
 
 import { Position } from '../components/Position'
 import { Velocity } from '../components/Velocity'
 import { SnackSystem } from '../SnackSystem'
 
-const movementQuery = defineQuery([Position, Velocity])
+const movementQuery = defineQuery([Position, Direction, Velocity])
 
 const ARENA_WIDTH = 256
 const ARENA_HEIGHT = 256
 
 /**
  * Update the Position component using the Velocity component
+ *
+ * TODO: split the bouncing logic into a different system BouncingSystem
  */
 export const MovementSystem: SnackSystem = world => {
   const {
@@ -22,27 +25,31 @@ export const MovementSystem: SnackSystem = world => {
   for (let i = 0; i < ents.length; i++) {
     const eid = ents[i]
 
-    const angle = Velocity.angle[eid]
-    const speed = Velocity.speed[eid]
+    const vx = Velocity.x[eid]
+    const vy = Velocity.y[eid]
 
-    let newX = Position.x[eid] + Math.cos(angle) * speed * delta
-    let newY = Position.y[eid] + Math.sin(angle) * speed * delta
+    let newX = Position.x[eid] + vx * delta
+    let newY = Position.y[eid] + vy * delta
 
     // Horizontal bounce
     if (newX < 0) {
-      Velocity.angle[eid] = Math.PI - angle
+      Direction.angle[eid] = Math.PI - Direction.angle[eid]
+      Velocity.x[eid] *= -1
       newX = -newX
     } else if (newX >= ARENA_WIDTH) {
-      Velocity.angle[eid] = Math.PI - angle
+      Velocity.x[eid] *= -1
+      Direction.angle[eid] = Math.PI - Direction.angle[eid]
       newX = ARENA_WIDTH - (newX - ARENA_WIDTH)
     }
 
     // Vertical bounce
     if (newY < 0) {
-      Velocity.angle[eid] = -angle
+      Direction.angle[eid] *= -1
+      Velocity.y[eid] *= -1
       newY = -newY
     } else if (newY >= ARENA_HEIGHT) {
-      Velocity.angle[eid] = -angle
+      Direction.angle[eid] *= -1
+      Velocity.y[eid] *= -1
       newY = ARENA_HEIGHT - (newY - ARENA_HEIGHT)
     }
 

@@ -13,6 +13,7 @@ import { SteeringSystem } from './ecs/systems/SteeringSystem'
 import { Unit } from './ecs/components/Unit'
 import { Leader, POSITION_HISTORY_LENGTH } from './ecs/components/Leader'
 import { SnakeSystem } from './ecs/systems/SnakeSystem'
+import { Direction } from './ecs/components/Direction'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -49,11 +50,12 @@ function main() {
   addComponent(world, Leader, eid)
   addComponent(world, Position, eid)
   addComponent(world, Velocity, eid)
+  addComponent(world, Direction, eid)
   addComponent(world, Controlled, eid)
 
-  Velocity.angle[eid] = Math.PI + Math.PI / 8
-  Velocity.speed[eid] = 100
-
+  Direction.angle[eid] = Math.PI / 8
+  Velocity.x[eid] = Math.cos(Direction.angle[eid]) * 100
+  Velocity.y[eid] = Math.sin(Direction.angle[eid]) * 100
   Position.x[eid] = 128
   Position.y[eid] = 128
 
@@ -66,7 +68,7 @@ function main() {
     const followerId = addEntity(world)
     addComponent(world, Unit, followerId)
     addComponent(world, Position, followerId)
-    addComponent(world, Velocity, followerId)
+    addComponent(world, Direction, followerId)
     Leader.followers[eid][i] = followerId
 
     Position.x[followerId] = 128

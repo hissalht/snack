@@ -1,11 +1,11 @@
 import { defineQuery } from 'bitecs'
+import { Direction } from '../components/Direction'
 
 import { Position } from '../components/Position'
 import { Unit } from '../components/Unit'
-import { Velocity } from '../components/Velocity'
 import { SnackSystem } from '../SnackSystem'
 
-const unitsQuery = defineQuery([Unit, Position, Velocity])
+const unitsQuery = defineQuery([Unit, Position, Direction])
 
 const BLOCK_WIDTH = 10
 const BLOCK_HEIGHT = 10
@@ -31,7 +31,7 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       const h = BLOCK_HEIGHT
       const x = Position.x[eid]
       const y = Position.y[eid]
-      const angle = Velocity.angle[eid]
+      const angle = Direction.angle[eid]
 
       ctx.beginPath()
       ctx.fillStyle = '#ffffff'
