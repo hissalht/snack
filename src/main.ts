@@ -14,6 +14,10 @@ import { Unit } from './ecs/components/Unit'
 import { Leader, POSITION_HISTORY_LENGTH } from './ecs/components/Leader'
 import { SnakeSystem } from './ecs/systems/SnakeSystem'
 import { Direction } from './ecs/components/Direction'
+import { ShootingSystem } from './ecs/systems/ShootingSystem'
+import { HighRoller } from './ecs/components/HighRoller'
+import { Bounce } from './ecs/components/Bounce'
+import { BouncingSystem } from './ecs/systems/BouncingSystem'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -37,7 +41,9 @@ function main() {
     InputSystem(document.body),
     SteeringSystem,
     MovementSystem,
+    BouncingSystem,
     SnakeSystem,
+    ShootingSystem,
     RenderingSystem(ctx),
     TimeSystem
   )
@@ -52,6 +58,7 @@ function main() {
   addComponent(world, Velocity, eid)
   addComponent(world, Direction, eid)
   addComponent(world, Controlled, eid)
+  addComponent(world, Bounce, eid)
 
   Direction.angle[eid] = Math.PI / 8
   Velocity.x[eid] = Math.cos(Direction.angle[eid]) * 100
@@ -69,10 +76,13 @@ function main() {
     addComponent(world, Unit, followerId)
     addComponent(world, Position, followerId)
     addComponent(world, Direction, followerId)
+    addComponent(world, HighRoller, followerId)
     Leader.followers[eid][i] = followerId
 
     Position.x[followerId] = 128
     Position.y[followerId] = 128
+
+    HighRoller.cooldown[followerId] = 1.5 // Wait half a sec before shooting the first bullet
   }
 
   function loop() {

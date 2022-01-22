@@ -2,10 +2,12 @@ import { defineQuery } from 'bitecs'
 import { Direction } from '../components/Direction'
 
 import { Position } from '../components/Position'
+import { Projectile } from '../components/Projectile'
 import { Unit } from '../components/Unit'
 import { SnackSystem } from '../SnackSystem'
 
 const unitsQuery = defineQuery([Unit, Position, Direction])
+const bulletsQuery = defineQuery([Projectile, Position])
 
 const BLOCK_WIDTH = 12
 const BLOCK_HEIGHT = 10
@@ -18,14 +20,14 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
   return world => {
     const { inputs } = world
 
-    const ents = unitsQuery(world)
-
+    // Clear canvas
     ctx.beginPath()
     ctx.fillStyle = '#000000'
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
-    for (let i = 0; i < ents.length; i++) {
-      const eid = ents[i]
+    const units = unitsQuery(world)
+    for (let i = 0; i < units.length; i++) {
+      const eid = units[i]
 
       const w = BLOCK_WIDTH
       const h = BLOCK_HEIGHT
@@ -52,11 +54,25 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       // ctx.stroke()
     }
 
+    const bullets = bulletsQuery(world)
+    for (let i = 0; i < bullets.length; i++) {
+      const eid = bullets[i]
+      const x = Position.x[eid]
+      const y = Position.y[eid]
+
+      ctx.beginPath()
+      ctx.fillStyle = '#ffffff'
+      ctx.arc(x, y, 3, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    // Left button
     ctx.beginPath()
     ctx.fillStyle = '#ffffff88'
     if (inputs.left) ctx.fillStyle = '#ffffff'
     ctx.fillRect(ctx.canvas.width - 40, ctx.canvas.height - 20, 18, 18)
 
+    // Right button
     ctx.beginPath()
     ctx.fillStyle = '#ffffff88'
     if (inputs.right) ctx.fillStyle = '#ffffff'
