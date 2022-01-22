@@ -1,3 +1,5 @@
+export const MAX_TIME_DELTA = 1 / 60 // seconds
+
 export const ARENA_WIDTH = 256
 export const ARENA_HEIGHT = 256
 
