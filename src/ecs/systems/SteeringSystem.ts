@@ -1,13 +1,11 @@
 import { defineQuery } from 'bitecs'
+import { MOVEMENT_SPEED, STEERING_SPEED } from '../../constants'
 import { Controlled } from '../components/Controlled'
 import { Direction } from '../components/Direction'
 import { Velocity } from '../components/Velocity'
 import { SnackSystem } from '../SnackSystem'
 
 const steeringQuery = defineQuery([Velocity, Direction, Controlled])
-
-const STEERING_SPEED = 5
-const MOVEMENT_SPEED = 100
 
 export const SteeringSystem: SnackSystem = world => {
   const {
