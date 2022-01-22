@@ -11,7 +11,7 @@ const BULLET_SPEED = 100
 
 const unitsQuery = defineQuery([HighRoller, Position])
 
-export const ShootingSystem: SnackSystem = world => {
+export const HighRollerSystem: SnackSystem = world => {
   const {
     time: { delta },
   } = world

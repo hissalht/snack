@@ -14,11 +14,11 @@ import { Unit } from './ecs/components/Unit'
 import { Leader, POSITION_HISTORY_LENGTH } from './ecs/components/Leader'
 import { SnakeSystem } from './ecs/systems/SnakeSystem'
 import { Direction } from './ecs/components/Direction'
-import { ShootingSystem } from './ecs/systems/ShootingSystem'
+import { HighRollerSystem } from './ecs/systems/HighRollerSystem'
 import { HighRoller } from './ecs/components/HighRoller'
 import { Bounce } from './ecs/components/Bounce'
 import { BouncingSystem } from './ecs/systems/BouncingSystem'
-import { Projectile } from './ecs/components/Projectile'
+import { DespawningSystem } from './ecs/systems/DespawningSystem'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -43,8 +43,9 @@ function main() {
     SteeringSystem,
     MovementSystem,
     BouncingSystem,
+    DespawningSystem,
     SnakeSystem,
-    ShootingSystem,
+    HighRollerSystem,
     RenderingSystem(ctx),
     TimeSystem
   )
@@ -72,7 +73,7 @@ function main() {
     Leader.positionHistory.y[eid][i] = 128
   }
 
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 5; i++) {
     const followerId = addEntity(world)
     addComponent(world, Unit, followerId)
     addComponent(world, Position, followerId)

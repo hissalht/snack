@@ -1,13 +1,11 @@
 import { defineQuery, hasComponent } from 'bitecs'
+import { ARENA_HEIGHT, ARENA_WIDTH } from '../../constants'
 
 import { Bounce } from '../components/Bounce'
 import { Direction } from '../components/Direction'
 import { Position } from '../components/Position'
 import { Velocity } from '../components/Velocity'
 import { SnackSystem } from '../SnackSystem'
-
-const ARENA_WIDTH = 256
-const ARENA_HEIGHT = 256
 
 const bouncesQuery = defineQuery([Bounce, Position, Velocity])
 
