@@ -10,10 +10,12 @@ export function InputSystem(domEl: HTMLElement): SnackSystem {
   const queue: Array<QueuedKeyEvent> = []
 
   domEl.addEventListener('keydown', e => {
+    e.preventDefault()
     queue.push(['keydown', e.key])
   })
 
   domEl.addEventListener('keyup', e => {
+    e.preventDefault()
     queue.push(['keyup', e.key])
   })
 

@@ -58,11 +58,11 @@ function main() {
   Position.y[eid] = 128
 
   for (let i = 0; i < POSITION_HISTORY_LENGTH; i++) {
-    Leader.previousPositions.x[eid][i] = 128
-    Leader.previousPositions.y[eid][i] = 128
+    Leader.positionHistory.x[eid][i] = 128
+    Leader.positionHistory.y[eid][i] = 128
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 40; i++) {
     const followerId = addEntity(world)
     addComponent(world, Unit, followerId)
     addComponent(world, Position, followerId)

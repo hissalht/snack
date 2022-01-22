@@ -13,9 +13,9 @@ export const SnakeSystem: SnackSystem = world => {
   const leaderId = leaderQuery(world)[0]
 
   // Fill the leader's position history
-  Leader.previousPositions.x[leaderId][Leader.historyCursor[leaderId]] =
+  Leader.positionHistory.x[leaderId][Leader.historyCursor[leaderId]] =
     Position.x[leaderId]
-  Leader.previousPositions.y[leaderId][Leader.historyCursor[leaderId]] =
+  Leader.positionHistory.y[leaderId][Leader.historyCursor[leaderId]] =
     Position.y[leaderId]
   Leader.historyCursor[leaderId] =
     (Leader.historyCursor[leaderId] + 1) % POSITION_HISTORY_LENGTH
@@ -31,8 +31,8 @@ export const SnakeSystem: SnackSystem = world => {
       index = POSITION_HISTORY_LENGTH + index
     }
 
-    Position.x[followerId] = Leader.previousPositions.x[leaderId][index]
-    Position.y[followerId] = Leader.previousPositions.y[leaderId][index]
+    Position.x[followerId] = Leader.positionHistory.x[leaderId][index]
+    Position.y[followerId] = Leader.positionHistory.y[leaderId][index]
   })
 
   return world

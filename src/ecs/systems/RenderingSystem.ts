@@ -16,6 +16,8 @@ const BLOCK_HEIGHT = 10
  */
 export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
   return world => {
+    const { inputs } = world
+
     const ents = unitsQuery(world)
 
     ctx.beginPath()
@@ -49,6 +51,16 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       ctx.lineTo(x, y + 10)
       ctx.stroke()
     }
+
+    ctx.beginPath()
+    ctx.fillStyle = '#ffffff88'
+    if (inputs.left) ctx.fillStyle = '#ffffff'
+    ctx.fillRect(ctx.canvas.width - 40, ctx.canvas.height - 20, 18, 18)
+
+    ctx.beginPath()
+    ctx.fillStyle = '#ffffff88'
+    if (inputs.right) ctx.fillStyle = '#ffffff'
+    ctx.fillRect(ctx.canvas.width - 20, ctx.canvas.height - 20, 18, 18)
 
     return world
   }
