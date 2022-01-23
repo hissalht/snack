@@ -11,6 +11,7 @@ export const DESPAWN_OFFSET = 10
 
 export const HIGHROLLER_SHOT_COOLDOWN = 1 // shoot every 1.0 seconds
 export const HIGHROLLER_BULLET_SPEED = 100
+export const HIGHROLLER_BULLET_DAMAGE = 5
 
 export const BLOCK_WIDTH = 12
 export const BLOCK_HEIGHT = 10

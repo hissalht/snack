@@ -1,9 +1,11 @@
 import { addComponent, addEntity, defineQuery } from 'bitecs'
 import {
+  HIGHROLLER_BULLET_DAMAGE,
   HIGHROLLER_BULLET_SPEED,
   HIGHROLLER_SHOT_COOLDOWN,
 } from '../../constants'
 import { Bounce } from '../components/Bounce'
+import { Damage } from '../components/Damage'
 import { HighRoller } from '../components/HighRoller'
 import { Position } from '../components/Position'
 import { Projectile } from '../components/Projectile'
@@ -33,6 +35,7 @@ export const HighRollerSystem: SnackSystem = world => {
       addComponent(world, Position, projectile)
       addComponent(world, Velocity, projectile)
       addComponent(world, Bounce, projectile)
+      addComponent(world, Damage, projectile)
 
       // Set bullet position
       Position.x[projectile] = Position.x[eid]
@@ -45,6 +48,9 @@ export const HighRollerSystem: SnackSystem = world => {
 
       // Set max number of bounces
       Bounce.max[projectile] = 1
+
+      // Set bullet damage
+      Damage.value[projectile] = HIGHROLLER_BULLET_DAMAGE
     }
   }
 

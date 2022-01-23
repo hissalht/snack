@@ -22,6 +22,8 @@ import { RemoveSystem } from './ecs/systems/RemoveSystem'
 import { Ennemy } from './ecs/components/Ennemy'
 import { Health } from './ecs/components/Health'
 import { ARENA_HEIGHT, ARENA_WIDTH } from './constants'
+import { DamageSystem } from './ecs/systems/DamageSystem'
+import { DeathSystem } from './ecs/systems/DeathSystem'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -47,6 +49,8 @@ function main() {
     MovementSystem,
     BouncingSystem,
     RemoveSystem,
+    DamageSystem,
+    DeathSystem,
     SnakeSystem,
     HighRollerSystem,
     RenderingSystem(ctx),
@@ -94,17 +98,17 @@ function main() {
     Health.hp[followerId] = Math.min(100, Math.random() * 100 + 50)
   }
 
-  {
+  for (let i = 0; i < 10; i++) {
     const ennemy = addEntity(world)
     addComponent(world, Position, ennemy)
     addComponent(world, Ennemy, ennemy)
     addComponent(world, Health, ennemy)
 
-    Position.x[ennemy] = 100
-    Position.y[ennemy] = 100
+    Position.x[ennemy] = Math.random() * ARENA_WIDTH
+    Position.y[ennemy] = Math.random() * ARENA_HEIGHT
 
     Health.max[ennemy] = 20
-    Health.hp[ennemy] = 15
+    Health.hp[ennemy] = 20
   }
 
   function loop() {

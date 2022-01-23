@@ -120,14 +120,16 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
         HEALTHBAR_HEIGHT
       )
 
-      ctx.beginPath()
-      ctx.fillStyle = HEALTHBAR_HP_COLOR
-      ctx.fillRect(
-        x - HEALTHBAR_WIDTH / 2,
-        y + HEALTHBAR_OFFSET,
-        HEALTHBAR_WIDTH * (Health.hp[eid] / Health.max[eid]),
-        HEALTHBAR_HEIGHT
-      )
+      if (Health.hp[eid] > 0) {
+        ctx.beginPath()
+        ctx.fillStyle = HEALTHBAR_HP_COLOR
+        ctx.fillRect(
+          x - HEALTHBAR_WIDTH / 2,
+          y + HEALTHBAR_OFFSET,
+          HEALTHBAR_WIDTH * (Health.hp[eid] / Health.max[eid]),
+          HEALTHBAR_HEIGHT
+        )
+      }
     }
 
     // Left button
