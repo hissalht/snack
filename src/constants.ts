@@ -10,7 +10,7 @@ export const MOVEMENT_SPEED = 100 // units/s
 export const DESPAWN_OFFSET = 10
 
 export const HIGHROLLER_SHOT_COOLDOWN = 1 // shoot every 1.0 seconds
-export const HIGHROLLER_BULLET_SPEED = 100
+export const HIGHROLLER_BULLET_SPEED = 200
 export const HIGHROLLER_BULLET_DAMAGE = 5
 
 export const BLOCK_WIDTH = 12
@@ -32,3 +32,6 @@ export const INPUT_VIEWER_COLOR_PRESSED = '#1d3354'
 
 export const INPUT_LEFT_KEYS = ['ArrowLeft', 'q', 'a']
 export const INPUT_RIGHT_KEYS = ['ArrowRight', 'd']
+
+export const ENNEMY_SPAWN_COOLDOWN = 5
+export const ENNEMY_MAX_HP = 20
