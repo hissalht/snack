@@ -7,3 +7,15 @@ https://snacke.netlify.app/
 ## Libraries
 
 - https://github.com/NateTheGreatt/bitecs
+
+## TODO list
+
+- [ ] Add ennemies
+- [ ] Add droppable items
+  - [ ] Double damage
+  - [ ] Invicibility
+  - [ ] Clear screen
+- [ ] Add more unit types
+- [ ] Add experience system
+  - [ ] Level up menu
+- [ ] Add alternative input methods
