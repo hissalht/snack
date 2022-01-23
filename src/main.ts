@@ -34,10 +34,6 @@ function getContext(): CanvasRenderingContext2D {
 function main() {
   const ctx = getContext()
 
-  ctx.beginPath()
-  ctx.fillStyle = '#000000'
-  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-
   const pipeline = pipe(
     InputSystem(document.body),
     SteeringSystem,

@@ -1,4 +1,13 @@
 import { defineQuery } from 'bitecs'
+import {
+  BACKGROUND_COLOR,
+  BLOCK_HEIGHT,
+  BLOCK_WIDTH,
+  BULLET_COLOR,
+  INPUT_VIEWER_COLOR,
+  INPUT_VIEWER_COLOR_PRESSED,
+  UNIT_COLOR,
+} from '../../constants'
 import { Direction } from '../components/Direction'
 
 import { Position } from '../components/Position'
@@ -8,9 +17,6 @@ import { SnackSystem } from '../SnackSystem'
 
 const unitsQuery = defineQuery([Unit, Position, Direction])
 const bulletsQuery = defineQuery([Projectile, Position])
-
-const BLOCK_WIDTH = 12
-const BLOCK_HEIGHT = 10
 
 /**
  * @param ctx Canvas rendering context
@@ -22,7 +28,7 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
 
     // Clear canvas
     ctx.beginPath()
-    ctx.fillStyle = '#000000'
+    ctx.fillStyle = BACKGROUND_COLOR
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     const units = unitsQuery(world)
@@ -36,7 +42,7 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       const angle = Direction.angle[eid]
 
       ctx.beginPath()
-      ctx.fillStyle = '#ffffff'
+      ctx.fillStyle = UNIT_COLOR
       ctx.translate(x, y)
       ctx.rotate(angle)
       ctx.translate(-x, -y)
@@ -61,21 +67,21 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       const y = Position.y[eid]
 
       ctx.beginPath()
-      ctx.fillStyle = '#ffffff'
+      ctx.fillStyle = BULLET_COLOR
       ctx.arc(x, y, 3, 0, Math.PI * 2)
       ctx.fill()
     }
 
     // Left button
     ctx.beginPath()
-    ctx.fillStyle = '#ffffff88'
-    if (inputs.left) ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = INPUT_VIEWER_COLOR
+    if (inputs.left) ctx.fillStyle = INPUT_VIEWER_COLOR_PRESSED
     ctx.fillRect(ctx.canvas.width - 40, ctx.canvas.height - 20, 18, 18)
 
     // Right button
     ctx.beginPath()
-    ctx.fillStyle = '#ffffff88'
-    if (inputs.right) ctx.fillStyle = '#ffffff'
+    ctx.fillStyle = INPUT_VIEWER_COLOR
+    if (inputs.right) ctx.fillStyle = INPUT_VIEWER_COLOR_PRESSED
     ctx.fillRect(ctx.canvas.width - 20, ctx.canvas.height - 20, 18, 18)
 
     return world
