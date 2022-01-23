@@ -18,7 +18,7 @@ import { HighRollerSystem } from './ecs/systems/HighRollerSystem'
 import { HighRoller } from './ecs/components/HighRoller'
 import { Bounce } from './ecs/components/Bounce'
 import { BouncingSystem } from './ecs/systems/BouncingSystem'
-import { DespawningSystem } from './ecs/systems/DespawningSystem'
+import { RemoveSystem } from './ecs/systems/RemoveSystem'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -39,7 +39,7 @@ function main() {
     SteeringSystem,
     MovementSystem,
     BouncingSystem,
-    DespawningSystem,
+    RemoveSystem,
     SnakeSystem,
     HighRollerSystem,
     RenderingSystem(ctx),

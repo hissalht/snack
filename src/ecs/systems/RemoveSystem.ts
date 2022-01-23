@@ -10,7 +10,7 @@ const positionnedQuery = defineQuery([Position])
  *
  * @note This system should be run immediately after the movement & bouncing systems.
  */
-export const DespawningSystem: SnackSystem = world => {
+export const RemoveSystem: SnackSystem = world => {
   const ents = positionnedQuery(world)
 
   for (let i = 0; i < ents.length; i++) {
