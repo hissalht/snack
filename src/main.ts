@@ -21,6 +21,7 @@ import { BouncingSystem } from './ecs/systems/BouncingSystem'
 import { RemoveSystem } from './ecs/systems/RemoveSystem'
 import { Ennemy } from './ecs/components/Ennemy'
 import { Health } from './ecs/components/Health'
+import { ARENA_HEIGHT, ARENA_WIDTH } from './constants'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -35,6 +36,10 @@ function getContext(): CanvasRenderingContext2D {
 
 function main() {
   const ctx = getContext()
+
+  const rect = ctx.canvas.getBoundingClientRect()
+  ctx.scale(rect.width / ARENA_WIDTH, rect.height / ARENA_HEIGHT)
+  ctx.save()
 
   const pipeline = pipe(
     InputSystem(document.body),

@@ -4,8 +4,12 @@ import {
   BLOCK_HEIGHT,
   BLOCK_WIDTH,
   BULLET_COLOR,
+  BULLET_RADIUS,
   ENNEMY_COLOR,
+  ENNEMY_RADIUS,
   HEALTHBAR_HEIGHT,
+  HEALTHBAR_HP_COLOR,
+  HEALTHBAR_MISSING_HP_COLOR,
   HEALTHBAR_OFFSET,
   HEALTHBAR_WIDTH,
   INPUT_VIEWER_COLOR,
@@ -50,13 +54,14 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       const y = Position.y[eid]
       const angle = Direction.angle[eid]
 
+      ctx.save()
       ctx.beginPath()
       ctx.fillStyle = UNIT_COLOR
       ctx.translate(x, y)
       ctx.rotate(angle)
       ctx.translate(-x, -y)
       ctx.fillRect(x - w / 2, y - h / 2, w, h) // Draw rectangle centered on entity position
-      ctx.resetTransform()
+      ctx.restore()
 
       // // Draw entity position cross
       // ctx.beginPath()
@@ -77,7 +82,7 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
 
       ctx.beginPath()
       ctx.fillStyle = BULLET_COLOR
-      ctx.arc(x, y, 3, 0, Math.PI * 2)
+      ctx.arc(x, y, BULLET_RADIUS, 0, Math.PI * 2)
       ctx.fill()
     }
 
@@ -90,9 +95,8 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
 
       ctx.beginPath()
       ctx.fillStyle = ENNEMY_COLOR
-      ctx.arc(x, y, 6, 0, Math.PI * 2)
+      ctx.arc(x, y, ENNEMY_RADIUS, 0, Math.PI * 2)
       ctx.fill()
-      ctx.resetTransform()
     }
 
     const healthEntities = healthQuery(world)
@@ -108,7 +112,7 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       }
 
       ctx.beginPath()
-      ctx.fillStyle = 'red'
+      ctx.fillStyle = HEALTHBAR_MISSING_HP_COLOR
       ctx.fillRect(
         x - HEALTHBAR_WIDTH / 2,
         y + HEALTHBAR_OFFSET,
@@ -117,7 +121,7 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       )
 
       ctx.beginPath()
-      ctx.fillStyle = 'green'
+      ctx.fillStyle = HEALTHBAR_HP_COLOR
       ctx.fillRect(
         x - HEALTHBAR_WIDTH / 2,
         y + HEALTHBAR_OFFSET,
