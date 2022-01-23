@@ -1,3 +1,4 @@
+import { INPUT_LEFT_KEYS, INPUT_RIGHT_KEYS } from '../../constants'
 import { SnackSystem } from '../SnackSystem'
 
 type QueuedKeyEvent = ['keydown' | 'keyup', string]
@@ -23,9 +24,9 @@ export function InputSystem(domEl: HTMLElement): SnackSystem {
     while (queue.length) {
       const [eventType, key] = queue.shift()!
 
-      if (key === 'ArrowLeft') {
+      if (INPUT_LEFT_KEYS.includes(key)) {
         world.inputs.left = eventType === 'keydown'
-      } else if (key === 'ArrowRight') {
+      } else if (INPUT_RIGHT_KEYS.includes(key)) {
         world.inputs.right = eventType === 'keydown'
       }
     }

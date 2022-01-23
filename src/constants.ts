@@ -20,3 +20,6 @@ export const BACKGROUND_COLOR = '#E9FFF9'
 export const BULLET_COLOR = '#467599'
 export const INPUT_VIEWER_COLOR = '#1d335488'
 export const INPUT_VIEWER_COLOR_PRESSED = '#1d3354'
+
+export const INPUT_LEFT_KEYS = ['ArrowLeft', 'q', 'a']
+export const INPUT_RIGHT_KEYS = ['ArrowRight', 'd']
