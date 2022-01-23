@@ -19,6 +19,8 @@ import { HighRoller } from './ecs/components/HighRoller'
 import { Bounce } from './ecs/components/Bounce'
 import { BouncingSystem } from './ecs/systems/BouncingSystem'
 import { RemoveSystem } from './ecs/systems/RemoveSystem'
+import { Ennemy } from './ecs/components/Ennemy'
+import { Health } from './ecs/components/Health'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -75,52 +77,30 @@ function main() {
     addComponent(world, Position, followerId)
     addComponent(world, Direction, followerId)
     addComponent(world, HighRoller, followerId)
+    addComponent(world, Health, followerId)
     Leader.followers[eid][i] = followerId
 
     Position.x[followerId] = 128
     Position.y[followerId] = 128
 
     HighRoller.cooldown[followerId] = 1.5 // Wait half a sec before shooting the first bullet
+
+    Health.max[followerId] = 100
+    Health.hp[followerId] = Math.min(100, Math.random() * 100 + 50)
   }
 
-  // {
-  //   const bullet = addEntity(world)
-  //   addComponent(world, Projectile, bullet)
-  //   addComponent(world, Position, bullet)
-  //   addComponent(world, Velocity, bullet)
-  //   addComponent(world, Bounce, bullet)
+  {
+    const ennemy = addEntity(world)
+    addComponent(world, Position, ennemy)
+    addComponent(world, Ennemy, ennemy)
+    addComponent(world, Health, ennemy)
 
-  //   // Set bullet position
-  //   Position.x[bullet] = 128
-  //   Position.y[bullet] = 128
+    Position.x[ennemy] = 100
+    Position.y[ennemy] = 100
 
-  //   // Set bullet velocity
-  //   const angle = Math.random() * Math.PI * 2
-  //   Velocity.x[bullet] = Math.cos(angle) * 200
-  //   Velocity.y[bullet] = Math.sin(angle) * 200
-
-  //   // Set max number of bounces
-  //   Bounce.max[bullet] = 3
-  // }
-  // {
-  //   const bullet = addEntity(world)
-  //   addComponent(world, Projectile, bullet)
-  //   addComponent(world, Position, bullet)
-  //   addComponent(world, Velocity, bullet)
-  //   addComponent(world, Bounce, bullet)
-
-  //   // Set bullet position
-  //   Position.x[bullet] = 128
-  //   Position.y[bullet] = 128
-
-  //   // Set bullet velocity
-  //   const angle = Math.random() * Math.PI * 2
-  //   Velocity.x[bullet] = Math.cos(angle) * 200
-  //   Velocity.y[bullet] = Math.sin(angle) * 200
-
-  //   // Set max number of bounces
-  //   Bounce.max[bullet] = 3
-  // }
+    Health.max[ennemy] = 20
+    Health.hp[ennemy] = 15
+  }
 
   function loop() {
     pipeline(world)
