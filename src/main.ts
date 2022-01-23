@@ -93,7 +93,7 @@ function main() {
     Position.x[followerId] = 128
     Position.y[followerId] = 128
 
-    HighRoller.cooldown[followerId] = 1.5 // Wait half a sec before shooting the first bullet
+    HighRoller.cooldown[followerId] = 1.5 + (i / 5) * 0.5
 
     Health.max[followerId] = 100
     Health.hp[followerId] = Math.min(100, Math.random() * 100 + 50)

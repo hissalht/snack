@@ -37,14 +37,14 @@ export const HighRollerSystem: SnackSystem = world => {
       addComponent(world, Bounce, projectile)
       addComponent(world, Damage, projectile)
 
-      // Set bullet position
-      Position.x[projectile] = Position.x[eid]
-      Position.y[projectile] = Position.y[eid]
-
       // Set bullet velocity
       const angle = Math.random() * Math.PI * 2
       Velocity.x[projectile] = Math.cos(angle) * HIGHROLLER_BULLET_SPEED
       Velocity.y[projectile] = Math.sin(angle) * HIGHROLLER_BULLET_SPEED
+
+      // Set bullet position
+      Position.x[projectile] = Position.x[eid] + Math.cos(angle) * 10
+      Position.y[projectile] = Position.y[eid] + Math.sin(angle) * 10
 
       // Set max number of bounces
       Bounce.max[projectile] = 1
