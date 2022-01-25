@@ -1,5 +1,3 @@
-import { defineComponent, Types } from 'bitecs'
+import { defineComponent } from 'bitecs'
 
-export const HighRoller = defineComponent({
-  cooldown: Types.f32,
-})
+export const HighRoller = defineComponent()

@@ -20,10 +20,15 @@ import { Bounce } from './ecs/components/Bounce'
 import { BouncingSystem } from './ecs/systems/BouncingSystem'
 import { RemoveSystem } from './ecs/systems/RemoveSystem'
 import { Health } from './ecs/components/Health'
-import { ARENA_HEIGHT, ARENA_WIDTH } from './constants'
+import {
+  ARENA_HEIGHT,
+  ARENA_WIDTH,
+  HIGHROLLER_SHOT_COOLDOWN,
+} from './constants'
 import { DamageSystem } from './ecs/systems/DamageSystem'
 import { DeathSystem } from './ecs/systems/DeathSystem'
 import { EnnemySpawnSystem } from './ecs/systems/EnnemySpawnSystem'
+import { Cooldown } from './ecs/components/Cooldown'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -87,13 +92,16 @@ function main() {
     addComponent(world, Position, followerId)
     addComponent(world, Direction, followerId)
     addComponent(world, HighRoller, followerId)
+    addComponent(world, Cooldown, followerId)
     addComponent(world, Health, followerId)
     Leader.followers[eid][i] = followerId
 
     Position.x[followerId] = 128
     Position.y[followerId] = 128
 
-    HighRoller.cooldown[followerId] = 1.5 + (i / 5) * 0.5
+    // HighRoller.cooldown[followerId] = 1.5 + (i / 5) * 0.5
+    Cooldown.default[followerId] = HIGHROLLER_SHOT_COOLDOWN
+    Cooldown.value[followerId] = 1.5 + (i / 5) * 0.5
 
     Health.max[followerId] = 100
     Health.hp[followerId] = Math.min(100, Math.random() * 100 + 50)

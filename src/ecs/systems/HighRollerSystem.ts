@@ -2,9 +2,9 @@ import { addComponent, addEntity, defineQuery } from 'bitecs'
 import {
   HIGHROLLER_BULLET_DAMAGE,
   HIGHROLLER_BULLET_SPEED,
-  HIGHROLLER_SHOT_COOLDOWN,
 } from '../../constants'
 import { Bounce } from '../components/Bounce'
+import { Cooldown } from '../components/Cooldown'
 import { Damage } from '../components/Damage'
 import { HighRoller } from '../components/HighRoller'
 import { Position } from '../components/Position'
@@ -12,8 +12,11 @@ import { Projectile } from '../components/Projectile'
 import { Velocity } from '../components/Velocity'
 import { SnackSystem } from '../SnackSystem'
 
-const unitsQuery = defineQuery([HighRoller, Position])
+const unitsQuery = defineQuery([HighRoller, Cooldown, Position])
 
+/**
+ * Handles the behavior of the *High Roller* class of snake unit.
+ */
 export const HighRollerSystem: SnackSystem = world => {
   const {
     time: { delta },
@@ -24,10 +27,10 @@ export const HighRollerSystem: SnackSystem = world => {
   for (let i = 0; i < ents.length; i++) {
     const eid = ents[i]
 
-    HighRoller.cooldown[eid] -= delta
+    Cooldown.value[eid] -= delta
 
-    if (HighRoller.cooldown[eid] <= 0) {
-      HighRoller.cooldown[eid] = HIGHROLLER_SHOT_COOLDOWN
+    if (Cooldown.value[eid] <= 0) {
+      Cooldown.value[eid] = Cooldown.default[eid]
 
       // spawn new bullet
       const projectile = addEntity(world)

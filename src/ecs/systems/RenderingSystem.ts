@@ -5,6 +5,8 @@ import {
   BLOCK_WIDTH,
   BULLET_COLOR,
   BULLET_RADIUS,
+  COOLDOWN_COLOR,
+  COOLDOWN_RADIUS,
   ENNEMY_COLOR,
   ENNEMY_RADIUS,
   HEALTHBAR_HEIGHT,
@@ -16,6 +18,7 @@ import {
   INPUT_VIEWER_COLOR_PRESSED,
   UNIT_COLOR,
 } from '../../constants'
+import { Cooldown } from '../components/Cooldown'
 import { Direction } from '../components/Direction'
 import { Ennemy } from '../components/Ennemy'
 import { Health } from '../components/Health'
@@ -28,6 +31,7 @@ import { SnackSystem } from '../SnackSystem'
 const unitsQuery = defineQuery([Unit, Position, Direction])
 const bulletsQuery = defineQuery([Projectile, Position])
 const ennemiesQuery = defineQuery([Ennemy, Position])
+const cooldownQuery = defineQuery([Cooldown, Position])
 
 const healthQuery = defineQuery([Health, Position])
 
@@ -130,6 +134,22 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
           HEALTHBAR_HEIGHT
         )
       }
+    }
+
+    // Draw cooldowns
+    const cooldownEntities = cooldownQuery(world)
+    for (let i = 0; i < cooldownEntities.length; i++) {
+      const eid = cooldownEntities[i]
+
+      const x = Position.x[eid]
+      const y = Position.y[eid]
+      const angle = (Cooldown.value[eid] / Cooldown.default[eid]) * Math.PI * 2
+
+      ctx.beginPath()
+      ctx.moveTo(x, y)
+      ctx.fillStyle = COOLDOWN_COLOR
+      ctx.arc(x, y, COOLDOWN_RADIUS, Math.PI * 1.5, Math.PI * 1.5 + angle)
+      ctx.fill()
     }
 
     // Left button
