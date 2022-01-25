@@ -21,6 +21,7 @@ import {
 import { Cooldown } from '../components/Cooldown'
 import { Direction } from '../components/Direction'
 import { Ennemy } from '../components/Ennemy'
+import { Experience } from '../components/Experience'
 import { Health } from '../components/Health'
 
 import { Position } from '../components/Position'
@@ -32,6 +33,7 @@ const unitsQuery = defineQuery([Unit, Position, Direction])
 const bulletsQuery = defineQuery([Projectile, Position])
 const ennemiesQuery = defineQuery([Ennemy, Position])
 const cooldownQuery = defineQuery([Cooldown, Position])
+const expQuery = defineQuery([Experience, Position])
 
 const healthQuery = defineQuery([Health, Position])
 
@@ -149,6 +151,19 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       ctx.moveTo(x, y)
       ctx.fillStyle = COOLDOWN_COLOR
       ctx.arc(x, y, COOLDOWN_RADIUS, Math.PI * 1.5, Math.PI * 1.5 + angle)
+      ctx.fill()
+    }
+
+    // Draw EXP orbs
+    const exps = expQuery(world)
+    for (let i = 0; i < exps.length; i++) {
+      const eid = exps[i]
+      const x = Position.x[eid]
+      const y = Position.y[eid]
+
+      ctx.beginPath()
+      ctx.fillStyle = 'green'
+      ctx.arc(x, y, 2, 0, Math.PI * 2)
       ctx.fill()
     }
 
