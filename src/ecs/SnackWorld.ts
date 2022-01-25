@@ -10,6 +10,7 @@ export interface SnackWorld extends IWorld {
     left: boolean // player is steering left
     right: boolean // player is steering right
   }
+  experience: number
 }
 
 export function createSnackWorld(): SnackWorld {
@@ -19,5 +20,6 @@ export function createSnackWorld(): SnackWorld {
     ...world,
     time: { delta: 0, elapsed: 0, then: performance.now() },
     inputs: { left: false, right: false },
+    experience: 0,
   }
 }

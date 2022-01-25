@@ -167,6 +167,11 @@ export function RenderingSystem(ctx: CanvasRenderingContext2D): SnackSystem {
       ctx.fill()
     }
 
+    // EXP bar
+    const { experience } = world
+    const progressEl = document.querySelector<HTMLProgressElement>('progress')!
+    progressEl.value = experience
+
     // Left button
     ctx.beginPath()
     ctx.fillStyle = INPUT_VIEWER_COLOR

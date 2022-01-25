@@ -29,6 +29,8 @@ import { DamageSystem } from './ecs/systems/DamageSystem'
 import { DeathSystem } from './ecs/systems/DeathSystem'
 import { EnnemySpawnSystem } from './ecs/systems/EnnemySpawnSystem'
 import { Cooldown } from './ecs/components/Cooldown'
+import { Experience } from './ecs/components/Experience'
+import { ExperienceSystem } from './ecs/systems/ExperienceSystem'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -56,6 +58,7 @@ function main() {
     RemoveSystem,
     DamageSystem,
     DeathSystem,
+    ExperienceSystem,
     SnakeSystem,
     HighRollerSystem,
     EnnemySpawnSystem(),
@@ -105,6 +108,16 @@ function main() {
 
     Health.max[followerId] = 100
     Health.hp[followerId] = Math.min(100, Math.random() * 100 + 50)
+  }
+
+  for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+      const eid = addEntity(world)
+      addComponent(world, Experience, eid)
+      addComponent(world, Position, eid)
+      Position.x[eid] = i * 10
+      Position.y[eid] = j * 10
+    }
   }
 
   function loop() {
