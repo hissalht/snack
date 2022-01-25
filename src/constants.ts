@@ -37,3 +37,6 @@ export const INPUT_RIGHT_KEYS = ['ArrowRight', 'd']
 
 export const ENNEMY_SPAWN_COOLDOWN = 5
 export const ENNEMY_MAX_HP = 20
+
+export const MAGNET_SPEED = 150
+export const MAGNET_DISTANCE = 20

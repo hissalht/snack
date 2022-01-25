@@ -24,6 +24,8 @@ import {
   ARENA_HEIGHT,
   ARENA_WIDTH,
   HIGHROLLER_SHOT_COOLDOWN,
+  MAGNET_DISTANCE,
+  MAGNET_SPEED,
 } from './constants'
 import { DamageSystem } from './ecs/systems/DamageSystem'
 import { DeathSystem } from './ecs/systems/DeathSystem'
@@ -31,6 +33,9 @@ import { EnnemySpawnSystem } from './ecs/systems/EnnemySpawnSystem'
 import { Cooldown } from './ecs/components/Cooldown'
 import { Experience } from './ecs/components/Experience'
 import { ExperienceSystem } from './ecs/systems/ExperienceSystem'
+import { MagnetSystem } from './ecs/systems/MagnetSystem'
+import { Magnet } from './ecs/components/Magnet'
+import { Magnetable } from './ecs/components/Magnetable'
 
 function getContext(): CanvasRenderingContext2D {
   const canvas = document.querySelector<HTMLCanvasElement>('#app')!
@@ -59,6 +64,7 @@ function main() {
     DamageSystem,
     DeathSystem,
     ExperienceSystem,
+    MagnetSystem,
     SnakeSystem,
     HighRollerSystem,
     EnnemySpawnSystem(),
@@ -77,12 +83,15 @@ function main() {
   addComponent(world, Direction, eid)
   addComponent(world, Controlled, eid)
   addComponent(world, Bounce, eid)
+  addComponent(world, Magnet, eid)
 
   Direction.angle[eid] = Math.PI / 8
   Velocity.x[eid] = Math.cos(Direction.angle[eid]) * 100
   Velocity.y[eid] = Math.sin(Direction.angle[eid]) * 100
   Position.x[eid] = 128
   Position.y[eid] = 128
+  Magnet.maxDistance[eid] = MAGNET_DISTANCE
+  Magnet.speed[eid] = MAGNET_SPEED
 
   for (let i = 0; i < POSITION_HISTORY_LENGTH; i++) {
     Leader.positionHistory.x[eid][i] = 128
@@ -115,6 +124,8 @@ function main() {
       const eid = addEntity(world)
       addComponent(world, Experience, eid)
       addComponent(world, Position, eid)
+      addComponent(world, Velocity, eid)
+      addComponent(world, Magnetable, eid)
       Position.x[eid] = i * 10
       Position.y[eid] = j * 10
     }
